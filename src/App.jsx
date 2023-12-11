@@ -1,33 +1,60 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { DragDropContext } from 'react-beautiful-dnd'
 import './App.css'
+import initialData from './initial-data'
+import Column from './Column'
+// import result from './result'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [data, setData] = useState(initialData)
+
+  const onDragEnd = (result) => {
+    const { destination, source, draggableId } = result
+
+
+    if (!destination) {
+      return;
+    }
+
+    if (destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return
+    }
+
+    const column = data.columns[source.droppableId]
+
+    const newTaskIds = Array.from(column.taskIds)
+    newTaskIds.splice(source.index, 1)
+    newTaskIds.splice(destination.index, 0, draggableId)
+
+    const newColumn = {
+      ...column,
+      taskIds: newTaskIds
+    }
+
+    const newData = {
+      ...data,
+      columns: {
+        ...data.columns,
+        [newColumn.id]: newColumn
+      }
+    }
+    setData(newData)
+  }
+
+
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <DragDropContext onDragEnd={onDragEnd}>
+        {data.columnOrder.map(columnId => {
+          const column = data.columns[columnId]
+          const tasks = column.taskIds.map(taskId => data.tasks[taskId])
+          return <Column key={column.id} column={column} task={tasks} />
+        })}
+      </DragDropContext>
     </>
   )
 }

@@ -4,16 +4,16 @@ import Task from './Task';
 
 const Container = styled.div`
     border: 1px solid black;
-    padding: 5px;
     width: 300px;
-    text-align: left
+    text-align: left;
 `;
 const Title = styled.h3`
-    margin-top: 0
+    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 10px
 `;
 const TaskList = styled.div`
     padding: 10px;
-    background-color: ${props => (props.isdraggingover ? 'skyblue' : 'white')}
 `
 
 
@@ -30,7 +30,8 @@ const Column = (props) => {
                     <TaskList
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        isdraggingover={snapshot.isDraggingOver}
+                        style={{ backgroundColor: snapshot.isDraggingOver ? 'skyblue' : 'white' }}
+                    // isDraggingOver={snapshot.isDraggingOver}
                     >
                         {task.map((task, index) => {
                             return (

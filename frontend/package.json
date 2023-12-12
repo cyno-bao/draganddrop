@@ -11,10 +11,18 @@
   },
   "dependencies": {
     "@beekai/react": "^0.4.1",
+    "@react-form-builder/components-rsuite": "^1.0.1",
+    "@react-form-builder/core": "^1.0.1",
+    "@react-form-builder/designer": "^1.0.1",
+    "formBuilder": "^3.17.3",
+    "jquery": "^3.7.1",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
-    "styled-components": "^6.1.1"
+    "react-form-builder2": "^0.16.5",
+    "reset-css": "^5.0.2",
+    "styled-components": "^6.1.1",
+    "survey-react-ui": "^1.9.121"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
